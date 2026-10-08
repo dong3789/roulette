@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>룰렛</title>
+<style>
+:root{color-scheme:light dark}body{font-family:system-ui,sans-serif;max-width:520px;margin:0 auto;padding:16px;text-align:center}
+textarea{width:100%;height:110px;font-size:16px;box-sizing:border-box}
+#wrap{position:relative;width:100%;max-width:400px;margin:12px auto}
+canvas{width:100%;height:auto}
+#ptr{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid #e33}
+button{font-size:20px;padding:10px 32px}#res{font-size:28px;font-weight:bold;min-height:40px;margin:10px}
+</style></head><body>
+<h1>룰렛</h1>
+<textarea id="t" placeholder="한 줄에 하나씩 (쉼표도 OK)"></textarea>
+<div id="wrap"><div id="ptr"></div><canvas id="c" width="800" height="800"></canvas></div>
+<button id="b">돌리기</button>
+<label><input type="checkbox" id="ex"> 당첨 항목 제외</label>
+<div id="res"></div>
+<script>
+const t=document.getElementById('t'),c=document.getElementById('c'),x=c.getContext('2d'),b=document.getElementById('b'),res=document.getElementById('res');
+let rot=0,spinning=false;
+const items=()=>t.value.split(/[\n,]/).map(s=>s.trim()).filter(Boolean).slice(0,50);
+function draw(){const it=items(),n=it.length,R=390;x.clearRect(0,0,800,800);
+ if(!n){x.fillStyle='#888';x.font='40px sans-serif';x.textAlign='center';x.fillText('항목을 입력하세요',400,400);return}
+ const a=2*Math.PI/n;for(let i=0;i<n;i++){const s=rot+i*a-Math.PI/2;
+  x.beginPath();x.moveTo(400,400);x.arc(400,400,R,s,s+a);x.closePath();x.fillStyle=`hsl(${i*360/n},70%,60%)`;x.fill();x.strokeStyle='#fff';x.lineWidth=3;x.stroke();
+  x.save();x.translate(400,400);x.rotate(s+a/2);x.fillStyle='#111';x.font=`bold ${Math.max(18,Math.min(40,300/n+14))}px sans-serif`;x.textAlign='right';x.textBaseline='middle';
+  let label=it[i];if(label.length>12)label=label.slice(0,11)+'…';x.fillText(label,R-20,0);x.restore()}}
+function rnd(){const u=new Uint32Array(1);crypto.getRandomValues(u);return u[0]/2**32}
+function save(){location.replace('#'+encodeURIComponent(items().join('\n')))}
+b.onclick=()=>{const it=items(),n=it.length;if(spinning||n<2){if(n<2)res.textContent='항목을 2개 이상 넣어줘';return}
+ spinning=true;b.disabled=true;res.textContent='';const a=2*Math.PI/n,win=Math.floor(rnd()*n);
+ // pointer at top: segment i spans [rot+i*a, rot+(i+1)*a] measured from top. want center of win at 0 (mod 2π)
+ const off=(rnd()-.5)*a*0.8,target=-(win*a+a/2)+off;
+ let cur=((rot%(2*Math.PI))+2*Math.PI)%(2*Math.PI),tgt=((target%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+ let delta=tgt-cur;if(delta<0)delta+=2*Math.PI;delta+=2*Math.PI*(5+Math.floor(rnd()*3));
+ const start=rot,dur=3500+rnd()*1500,t0=performance.now();
+ (function f(now){const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,4);rot=start+delta*e;draw();
+  if(p<1)requestAnimationFrame(f);else{res.textContent='🎉 '+it[win];spinning=false;b.disabled=false;
+   if(document.getElementById('ex').checked){const arr=items();arr.splice(win,1);t.value=arr.join('\n');save();draw()}}})(t0)};
+t.oninput=()=>{save();draw()};
+const h=decodeURIComponent(location.hash.slice(1));t.value=h||'짜장면\n짬뽕\n탕수육\n볶음밥';draw();
+</script></body></html>
