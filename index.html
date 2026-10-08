@@ -36,7 +36,7 @@
   --ring:0 0 0 3px rgba(129,140,248,.3);
 }}
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
 body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.5 var(--font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent}
 button,input,textarea{font:inherit;color:inherit;letter-spacing:inherit}
 button{cursor:pointer;-webkit-user-select:none;user-select:none}
@@ -81,7 +81,7 @@ button{cursor:pointer;-webkit-user-select:none;user-select:none}
 .stage-title p{margin:2px 0 0;font-size:13px;color:var(--text-2)}
 .stage-actions{display:flex;gap:2px}
 .wheel-box{position:relative;width:min(100%,400px);aspect-ratio:1/1;margin-top:10px}
-.wheel-ring{position:absolute;inset:0;border-radius:50%;background:var(--surface);border:1px solid var(--border);padding:7px;box-shadow:var(--shadow-md);transition:box-shadow .6s var(--ease)}
+.wheel-ring{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:var(--surface);border:1px solid var(--border);padding:7px;box-shadow:var(--shadow-md);transition:box-shadow .6s var(--ease)}
 .wheel-box.glow .wheel-ring{box-shadow:var(--shadow-md),0 0 0 6px color-mix(in srgb,var(--glow) 22%,transparent),0 0 60px -6px var(--glow)}
 .wheel-ring canvas{display:block;width:100%;height:100%;border-radius:50%;will-change:transform;transform:rotate(0rad)}
 .pointer{position:absolute;left:50%;top:-16px;width:30px;height:40px;margin-left:-15px;z-index:3;color:var(--text);transform-origin:50% 35%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
@@ -180,6 +180,37 @@ textarea.items[readonly]{opacity:.6}
 .side-foot{padding:12px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .side-foot .note{grid-column:1/-1;font-size:11px;color:var(--text-3);padding:2px 4px 0;text-align:center}
 
+/* account */
+.acct-btn{width:36px;height:36px;flex:none;padding:0;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-2);display:grid;place-items:center;box-shadow:var(--shadow-sm);overflow:hidden;transition:background .15s,color .15s}
+.acct-btn:hover{background:var(--surface-2);color:var(--text)}
+.acct-btn svg{width:18px;height:18px}
+.avatar{position:relative;display:inline-grid;place-items:center;width:var(--s,32px);height:var(--s,32px);border-radius:50%;background:var(--accent-soft);color:var(--accent-text);font-weight:700;font-size:calc(var(--s,32px) * .42);overflow:hidden;flex:none}
+.avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.acct-side{padding:0 12px 10px}
+.acct-card{width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid var(--border);background:var(--bg);text-align:left;transition:background .15s,border-color .15s}
+.acct-card:hover{background:var(--surface-2);border-color:var(--border-strong)}
+.acct-meta{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.acct-meta b{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acct-meta small{font-size:11px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sync{width:8px;height:8px;border-radius:50%;background:#22C55E;flex:none;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+.sync.saving{background:#F59E0B;box-shadow:0 0 0 3px rgba(245,158,11,.2);animation:blink 1s infinite}
+.sync.error{background:var(--danger);box-shadow:0 0 0 3px rgba(220,38,38,.18)}
+@keyframes blink{50%{opacity:.35}}
+.acct-guest{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--bg)}
+.acct-guest b{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.acct-guest small{display:block;font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.45}
+.acct-guest .gsi-slot{margin-top:10px}
+.gsi-slot{min-height:40px;display:flex;justify-content:center;align-items:center;color-scheme:normal}
+.gsi-slot small{color:var(--text-3)}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:999px;background:var(--surface-3);color:var(--text-2)}
+.profile{display:flex;align-items:center;gap:14px;margin:6px 0 16px}
+.profile b{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em}
+.profile small{display:block;font-size:13px;color:var(--text-2)}
+.status-line{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--surface-2);font-size:13px;color:var(--text-2)}
+.fitem.drop-before{box-shadow:inset 0 2px 0 var(--accent)}
+.fitem.drop-after{box-shadow:inset 0 -2px 0 var(--accent)}
+.fitem.dragging{opacity:.4}
+
 /* ---------- modal / sheet ---------- */
 .layer{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .scrim{position:absolute;inset:0;background:rgba(12,10,9,.4);opacity:0;transition:opacity .22s}
@@ -254,18 +285,20 @@ textarea.items[readonly]{opacity:.6}
     <div class="side-head">
       <div class="brand"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#4F46E5"/><path d="M16 16 L16 2 A14 14 0 0 1 28.1 9z" fill="#E8B85C"/><path d="M16 16 L28.1 23 A14 14 0 0 1 16 30z" fill="#0F8B8D"/><circle cx="16" cy="16" r="4" fill="#fff"/></svg>룰렛</div>
     </div>
+    <div class="acct-side" id="acctSide" hidden></div>
     <div class="side-label"><span>폴더</span><button class="icon-btn" id="newFolderSide" title="새 폴더" aria-label="새 폴더"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
     <ul class="flist" id="folderList"></ul>
     <div class="side-foot">
       <button class="btn btn-sm" id="exportSide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>내보내기</button>
       <button class="btn btn-sm" id="importSide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>가져오기</button>
-      <p class="note">데이터는 이 브라우저에만 저장돼요</p>
+      <p class="note" id="storageNote">데이터는 이 브라우저에만 저장돼요</p>
     </div>
   </aside>
 
   <header class="topbar">
     <div class="brand"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#4F46E5"/><path d="M16 16 L16 2 A14 14 0 0 1 28.1 9z" fill="#E8B85C"/><path d="M16 16 L28.1 23 A14 14 0 0 1 16 30z" fill="#0F8B8D"/><circle cx="16" cy="16" r="4" fill="#fff"/></svg>룰렛</div>
     <button class="chip" id="folderChip" aria-haspopup="dialog"><span id="chipName">폴더</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="acct-btn" id="acctBtn" aria-label="계정" hidden></button>
   </header>
 
   <main class="main">
@@ -339,7 +372,7 @@ function randInt(n) {
   return u[0] % n;
 }
 function uid() { const a = new Uint32Array(2); crypto.getRandomValues(a); return a[0].toString(36) + a[1].toString(36); }
-const parseItems = s => String(s).split(/[\n,]/).map(x => x.trim()).filter(Boolean).slice(0, MAX_ITEMS);
+const parseItems = s => String(s).split(/[\n,]/).map(x => x.trim().slice(0, 100)).filter(Boolean).slice(0, MAX_ITEMS);
 
 /* ---------- colors ---------- */
 const pal = () => PALETTE[mqDark.matches ? 'dark' : 'light'];
@@ -387,7 +420,7 @@ function defaultState() {
 }
 function normFolder(f) {
   if (!f || typeof f !== 'object') return null;
-  const items = (Array.isArray(f.items) ? f.items : parseItems(f.items || '')).map(x => String(x).trim()).filter(Boolean).slice(0, MAX_ITEMS);
+  const items = (Array.isArray(f.items) ? f.items : parseItems(f.items || '')).map(x => String(x).trim().slice(0, 100)).filter(Boolean).slice(0, MAX_ITEMS);
   const history = (Array.isArray(f.history) ? f.history : [])
     .filter(e => e && typeof e.t === 'number' && isFinite(e.t) && typeof e.w === 'string')
     .map(e => ({ t: e.t, w: e.w.slice(0, 200), n: typeof e.n === 'number' ? e.n : 0 }))
@@ -405,7 +438,15 @@ function load() {
   return defaultState();
 }
 let state = load();
-function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) { toast('저장하지 못했어요 (저장 공간 확인)'); } }
+let mode = 'guest';            // 'guest' (localStorage) | 'cloud' (server account)
+let account = null, apiAvailable = false, loginEnabled = false, clientId = null, gisReady = false, gisFailed = false, syncError = false;
+const MODE_KEY = 'roulette.mode', CLOUD_CACHE = 'roulette.cloudCache';
+function save() {
+  try {
+    if (mode === 'cloud') localStorage.setItem(CLOUD_CACHE, JSON.stringify({ user: account, state }));
+    else localStorage.setItem(LS_KEY, JSON.stringify(state));
+  } catch (e) { if (mode !== 'cloud') toast('저장하지 못했어요 (저장 공간 확인)'); }
+}
 const cur = () => state.folders.find(f => f.id === state.active) || state.folders[0];
 
 /* ---------- elements ---------- */
@@ -477,7 +518,7 @@ function tick() {
 function spin() {
   if (spinning) return;
   const f = cur();
-  commitItems();
+  commitItems(); cloud.flush();
   const it = f.items.slice(), n = it.length;
   if (n < 2) { toast('항목을 2개 이상 추가하면 돌릴 수 있어요'); selectTab('items'); ta.focus(); return; }
   spinning = true; document.body.classList.add('spinning'); hub.disabled = true; ta.readOnly = true;
@@ -500,8 +541,9 @@ function spin() {
     const landed = indexAt(rot, n);       // what the pointer visually shows
     if (landed !== win) console.warn('pointer mismatch', landed, win);
     const name = it[landed], t = Date.now();
-    f.history.push({ t, w: name, n }); if (f.history.length > MAX_HISTORY) f.history.splice(0, f.history.length - MAX_HISTORY);
-    save();
+    const entry = { t, w: name, n };
+    f.history.push(entry); if (f.history.length > MAX_HISTORY) f.history.splice(0, f.history.length - MAX_HISTORY);
+    save(); cloud.spin(f, entry);
     highlight = landed; drawWheel();
     box.style.setProperty('--glow', colorFor(landed, n)); box.classList.add('glow');
     renderFolders(); renderStageMeta(); renderHistory(true); renderStats(); renderLast();
@@ -512,7 +554,7 @@ function spin() {
 function endSpin(f, idx, name) {
   highlight = -1; box.classList.remove('glow');
   if (f.exclude && f.items[idx] === name) {
-    f.items.splice(idx, 1); save();
+    f.items.splice(idx, 1); save(); cloud.patch(f, { items: f.items });
     if (f.id === state.active) ta.value = f.items.join('\n');
     toast('‘' + name + '’ 항목을 뺐어요');
   }
@@ -629,13 +671,15 @@ function switchFolder(id) {
   if (!state.folders.some(f => f.id === id)) return;
   commitItems();
   state.active = id; save(); highlight = -1;
+  if (mode === 'cloud') localStorage.setItem('roulette.cloudActive', id);
   renderAll(true);
 }
 async function createFolder() {
   if (spinning) return;
   const name = await promptText('새 폴더', { placeholder: '예) 산책, 점심, 주말 영화', ok: '만들기', desc: '용도별로 룰렛을 나눠 관리해요.' });
   if (!name) return;
-  const f = newFolder(name); state.folders.push(f); save();
+  if (state.folders.length >= 100) { toast('폴더는 100개까지 만들 수 있어요'); return; }
+  const f = newFolder(name); state.folders.push(f); save(); cloud.create(f);
   switchFolder(f.id); selectTab('items');
   setTimeout(() => ta.focus(), 50);
 }
@@ -644,15 +688,15 @@ async function renameFolder() {
   const f = cur();
   const name = await promptText('이름 변경', { value: f.name, ok: '저장' });
   if (!name || name === f.name) return;
-  f.name = name; save(); renderAll(false);
+  f.name = name; save(); cloud.patch(f, { name }); renderAll(false);
 }
 async function deleteFolder() {
   if (spinning) return;
   const f = cur();
   const ok = await confirmBox('‘' + f.name + '’ 폴더를 삭제할까요?', '항목과 기록 ' + f.history.length + '건이 함께 사라지고 되돌릴 수 없어요.', '삭제', true);
   if (!ok) return;
-  const i = state.folders.indexOf(f); state.folders.splice(i, 1);
-  if (!state.folders.length) state.folders.push(newFolder('새 룰렛'));
+  const i = state.folders.indexOf(f); state.folders.splice(i, 1); cloud.del(f.id);
+  if (!state.folders.length) { const nf = newFolder('새 룰렛'); state.folders.push(nf); cloud.create(nf); }
   state.active = state.folders[Math.max(0, i - 1)].id; save();
   renderAll(true); toast('폴더를 삭제했어요');
 }
@@ -660,7 +704,7 @@ function folderSheet() {
   const m = openModal('<div class="grabber"></div><h3 class="m-title">폴더</h3><ul class="sheet-list">' + folderItemsHTML() + '</ul>' +
     '<button class="btn btn-lg" style="width:100%;margin-top:10px" data-new>＋ 새 폴더</button><div class="sheet-sep"></div>' +
     '<div class="sheet-grid"><button class="btn" data-exp>내보내기 (JSON)</button><button class="btn" data-imp>가져오기</button></div>' +
-    '<p class="m-desc" style="margin:12px 0 0;font-size:12px;text-align:center">데이터는 이 브라우저(기기)에만 저장돼요. 기기를 옮길 땐 내보내기/가져오기를 써주세요.</p>', { label: '폴더' });
+    '<p class="m-desc" style="margin:12px 0 0;font-size:12px;text-align:center">' + (mode === 'cloud' ? '계정에 저장돼요 · 로그인한 모든 기기에서 동기화돼요.' : '데이터는 이 브라우저(기기)에만 저장돼요. 기기를 옮길 땐 로그인하거나 내보내기/가져오기를 써주세요.') + '</p>', { label: '폴더' });
   m.el.querySelectorAll('[data-id]').forEach(b => b.onclick = () => { m.close(); switchFolder(b.dataset.id); });
   m.el.querySelector('[data-new]').onclick = () => { m.close(); setTimeout(createFolder, 80); };
   m.el.querySelector('[data-exp]').onclick = () => { m.close(); exportData(); };
@@ -668,7 +712,7 @@ function folderSheet() {
 }
 function folderItemsHTML() {
   const p = PALETTE.light;
-  return state.folders.map((f, i) => '<li><button class="fitem" data-id="' + f.id + '"' + (f.id === state.active ? ' aria-current="true"' : '') + '>' +
+  return state.folders.map((f, i) => '<li><button class="fitem" draggable="true" data-id="' + f.id + '"' + (f.id === state.active ? ' aria-current="true"' : '') + '>' +
     '<span class="fsq" style="background:' + p[i % p.length] + ';color:' + labelColor(p[i % p.length]) + '">' + esc([...f.name][0] || '?') + '</span>' +
     '<span class="fname">' + esc(f.name) + '</span><span class="fmeta tnum">' + f.items.length + '개 · ' + f.history.length + '회</span></button></li>').join('');
 }
@@ -677,7 +721,7 @@ function folderItemsHTML() {
 function commitItems() {
   if (spinning) return;
   const f = cur(), next = parseItems(ta.value);
-  if (next.join('\n') !== f.items.join('\n')) { f.items = next; save(); }
+  if (next.join('\n') !== f.items.join('\n')) { f.items = next; save(); cloud.items(f); }
 }
 let inputTimer;
 ta.addEventListener('input', () => {
@@ -695,7 +739,7 @@ $('#shuffleBtn').onclick = () => {
   if (spinning) return; commitItems();
   const f = cur(), a = f.items;
   for (let i = a.length - 1; i > 0; i--) { const j = randInt(i + 1); [a[i], a[j]] = [a[j], a[i]]; }
-  save(); ta.value = a.join('\n'); drawWheel(); renderStats();
+  save(); cloud.patch(f, { items: a }); ta.value = a.join('\n'); drawWheel(); renderStats();
 };
 
 /* ---------- render ---------- */
@@ -742,7 +786,7 @@ function renderHistory(fresh) {
   $('#clearHist').onclick = async () => {
     if (spinning) return;
     if (!(await confirmBox('‘' + f.name + '’ 기록을 지울까요?', '당첨 기록 ' + f.history.length + '건과 통계가 초기화돼요. 항목은 그대로예요.', '지우기', true))) return;
-    f.history = []; save(); renderAll(false); toast('기록을 지웠어요');
+    f.history = []; save(); cloud.clear(f); renderAll(false); toast('기록을 지웠어요');
   };
 }
 function computeStats(f) {
@@ -847,6 +891,15 @@ $('#importFile').onchange = async e => {
   const how = await choice('백업 가져오기', '폴더 ' + data.folders.length + '개 · 기록 ' + hc + '건이 있어요. 기존 데이터와 합칠까요, 아니면 통째로 바꿀까요?',
     [{ label: '취소', value: null }, { label: '대체', value: 'replace', cls: 'btn-danger' }, { label: '병합', value: 'merge', cls: 'btn-primary' }]);
   if (!how || spinning) return;
+  if (mode === 'cloud') {
+    try {
+      cloud.flush(); await cloud.q;
+      const r = await api('POST', '/api/import', { mode: how, data: { folders: data.folders } });
+      applyServerFolders(r.folders); await ensureFolders();
+      renderAll(true); toast(how === 'replace' ? '백업으로 바꿨어요' : '백업을 합쳤어요' + (r.skipped ? ' (폴더 한도로 ' + r.skipped + '개 제외)' : ''));
+    } catch (err) { toast('가져오기에 실패했어요'); }
+    return;
+  }
   if (how === 'replace') state = data;
   else {
     for (const f of data.folders) {
@@ -888,7 +941,7 @@ async function handleHash() {
   if (same) { switchFolder(same.id); toast('이미 있는 폴더예요: ' + same.name); return; }
   const ok = await confirmBox('공유된 룰렛을 추가할까요?', '‘' + name + '’ · ' + items.length + '개 항목: ' + items.slice(0, 6).join(', ') + (items.length > 6 ? ' …' : ''), '새 폴더로 추가');
   if (!ok) return;
-  const f = newFolder(name, items); state.folders.push(f); save(); switchFolder(f.id);
+  const f = newFolder(name, items); state.folders.push(f); save(); cloud.create(f); switchFolder(f.id);
 }
 
 /* ---------- wiring ---------- */
@@ -900,22 +953,284 @@ $('#deleteBtn').onclick = deleteFolder;
 $('#shareBtn').onclick = shareFolder;
 $('#exportSide').onclick = exportData;
 $('#importSide').onclick = () => $('#importFile').click();
-$('#exclude').onchange = e => { cur().exclude = e.target.checked; save(); };
+$('#exclude').onchange = e => { const f = cur(); f.exclude = e.target.checked; save(); cloud.patch(f, { exclude: f.exclude }); };
 document.addEventListener('keydown', e => {
   if (e.target.closest && e.target.closest('input,textarea,[role=dialog],button')) return;
   if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); spin(); }
 });
-window.addEventListener('storage', e => { if (e.key === LS_KEY && !spinning) { const s = normState(JSON.parse(e.newValue || 'null')); if (s) { state = s; renderAll(true); } } });
+window.addEventListener('storage', e => { if (mode === 'guest' && e.key === LS_KEY && !spinning) { const s = normState(JSON.parse(e.newValue || 'null')); if (s) { state = s; renderAll(true); } } });
 const redraw = () => drawWheel();
 if (window.ResizeObserver) new ResizeObserver(redraw).observe(cv); else addEventListener('resize', redraw);
 (mqDark.addEventListener ? mqDark.addEventListener('change', () => renderAll(false)) : mqDark.addListener(() => renderAll(false)));
-setInterval(() => { if (!spinning) renderLast(); }, 60000);
+setInterval(() => { if (!spinning) renderLast(); refreshFromServer(); }, 60000);
 
-renderAll(true);
-selectTab('items');
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
-handleHash();
-window.__roulette = { indexAt, state: () => state };
+/* ---------- folder reorder (drag & drop, desktop sidebar) ---------- */
+(() => {
+  const list = $('#folderList'); let dragId = null;
+  const clear = () => list.querySelectorAll('.drop-before,.drop-after,.dragging').forEach(x => x.classList.remove('drop-before', 'drop-after', 'dragging'));
+  list.addEventListener('dragstart', e => {
+    const b = e.target.closest('[data-id]'); if (!b || spinning) { e.preventDefault(); return; }
+    dragId = b.dataset.id; b.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', dragId);
+  });
+  list.addEventListener('dragover', e => {
+    if (!dragId) return; e.preventDefault();
+    const b = e.target.closest('[data-id]');
+    list.querySelectorAll('.drop-before,.drop-after').forEach(x => x.classList.remove('drop-before', 'drop-after'));
+    if (b && b.dataset.id !== dragId) { const r = b.getBoundingClientRect(); b.classList.add(e.clientY < r.top + r.height / 2 ? 'drop-before' : 'drop-after'); }
+  });
+  list.addEventListener('drop', e => {
+    e.preventDefault();
+    const b = e.target.closest('[data-id]');
+    if (b && dragId && b.dataset.id !== dragId) {
+      const after = b.classList.contains('drop-after');
+      const [m] = state.folders.splice(state.folders.findIndex(f => f.id === dragId), 1);
+      let to = state.folders.findIndex(f => f.id === b.dataset.id); if (after) to++;
+      state.folders.splice(to, 0, m); save(); cloud.order(); renderFolders();
+    }
+    dragId = null; clear();
+  });
+  list.addEventListener('dragend', () => { dragId = null; clear(); });
+})();
+
+/* ---------- server API & sync ---------- */
+async function api(method, path, body, keepalive) {
+  const o = { method, credentials: 'same-origin', headers: { 'X-Requested-With': 'roulette' }, keepalive: !!keepalive };
+  if (body !== undefined) { o.headers['Content-Type'] = 'application/json'; o.body = JSON.stringify(body); }
+  const r = await fetch(path, o);
+  const ct = r.headers.get('content-type') || '';
+  const data = ct.indexOf('application/json') >= 0 ? await r.json().catch(() => null) : null;
+  if (!r.ok || !data) { const e = new Error((data && data.error) || 'http_' + r.status); e.status = data ? r.status : (r.ok ? 0 : r.status); e.code = data && data.error; throw e; }
+  return data;
+}
+const cloud = {
+  q: Promise.resolve(), pending: 0, timers: {},
+  run(fn) {
+    if (mode !== 'cloud') return;
+    this.pending++; setSync();
+    this.q = this.q.then(fn).catch(onSyncError).then(() => { this.pending--; setSync(); });
+  },
+  create(f) { const b = { id: f.id, name: f.name, items: f.items.slice(), exclude: f.exclude }; this.run(() => api('POST', '/api/folders', b)); },
+  patch(f, body) { const id = f.id, b = JSON.parse(JSON.stringify(body)); this.run(() => api('PATCH', '/api/folders/' + id, b)); },
+  del(id) { clearTimeout(this.timers[id]); delete this.timers[id]; this.run(() => api('DELETE', '/api/folders/' + id)); },
+  order() { const ids = state.folders.map(f => f.id); this.run(() => api('PUT', '/api/folders/order', { ids })); },
+  clear(f) { const id = f.id; this.run(() => api('DELETE', '/api/folders/' + id + '/spins')); },
+  spin(f, e) { const id = f.id; this.run(async () => { const r = await api('POST', '/api/folders/' + id + '/spins', { item: e.w, n: e.n }); e.t = r.spin.t; save(); }); },
+  items(f) {
+    if (mode !== 'cloud') return;
+    clearTimeout(this.timers[f.id]);
+    this.timers[f.id] = setTimeout(() => { delete this.timers[f.id]; this.patch(f, { items: f.items }); }, 500);
+  },
+  flush(keepalive) {
+    for (const id of Object.keys(this.timers)) {
+      clearTimeout(this.timers[id]); delete this.timers[id];
+      const f = state.folders.find(x => x.id === id); if (!f) continue;
+      if (keepalive) api('PATCH', '/api/folders/' + id, { items: f.items }, true).catch(() => {});
+      else this.patch(f, { items: f.items });
+    }
+  },
+  reset() { for (const id of Object.keys(this.timers)) clearTimeout(this.timers[id]); this.timers = {}; }
+};
+function onSyncError(e) {
+  if (mode !== 'cloud') return;
+  if (e && e.status === 401) { toast('로그인이 만료됐어요. 다시 로그인해 주세요'); becomeGuest(); return; }
+  syncError = true; setSync();
+  toast(e && e.status ? '저장하지 못했어요 · 서버 데이터로 다시 맞출게요' : '오프라인이에요 · 연결되면 다시 맞출게요');
+  setTimeout(() => refreshFromServer(true), 1500);
+}
+function setSync() {
+  const st = syncError ? 'error' : cloud.pending ? 'saving' : 'ok';
+  const label = { ok: '동기화됨', saving: '저장 중…', error: '동기화 오류' }[st];
+  document.querySelectorAll('.sync').forEach(d => { d.className = 'sync ' + st; d.title = label; });
+  document.querySelectorAll('[data-sync-label]').forEach(d => d.textContent = label);
+}
+function applyServerFolders(folders) {
+  const active = localStorage.getItem('roulette.cloudActive') || state.active;
+  state = normState({ folders, active }) || { v: 2, active: null, folders: [] };
+  save();
+}
+async function ensureFolders() {
+  if (state.folders.length) return;
+  const d = defaultState();
+  for (const f of d.folders) await api('POST', '/api/folders', { id: f.id, name: f.name, items: f.items, exclude: false });
+  state = d; save();
+}
+const DEFAULT_SIG = JSON.stringify(defaultState().folders.map(f => [f.name, f.items]));
+async function offerGuestImport() {
+  const key = 'roulette.guestOffered.' + ((account && account.email) || '');
+  if (localStorage.getItem(key)) return;
+  localStorage.setItem(key, '1');
+  let g = null; try { g = normState(JSON.parse(localStorage.getItem(LS_KEY))); } catch (e) {}
+  if (!g) return;
+  const hc = g.folders.reduce((s, f) => s + f.history.length, 0);
+  if (!hc && JSON.stringify(g.folders.map(f => [f.name, f.items])) === DEFAULT_SIG) return; // untouched sample data
+  const ok = await choice('이 브라우저의 데이터를 가져올까요?', '로그인 전에 쓰던 폴더 ' + g.folders.length + '개 · 기록 ' + hc + '건이 있어요. 계정으로 가져오면 모든 기기에서 볼 수 있어요.',
+    [{ label: '건너뛰기', value: false }, { label: '가져오기', value: true, cls: 'btn-primary' }]);
+  if (ok !== true) return;
+  try {
+    const r = await api('POST', '/api/import', { mode: 'merge', data: { folders: g.folders } });
+    applyServerFolders(r.folders);
+    toast('폴더 ' + (r.added + r.merged) + '개를 가져왔어요' + (r.skipped ? ' (' + r.skipped + '개는 한도 초과)' : ''));
+  } catch (e) { toast('가져오기에 실패했어요'); }
+}
+async function enterCloud(user, fresh) {
+  account = user; mode = 'cloud'; syncError = false;
+  localStorage.setItem(MODE_KEY, 'cloud');
+  const d = await api('GET', '/api/state');
+  applyServerFolders(d.folders);
+  if (fresh) await offerGuestImport();
+  await ensureFolders();
+  renderAccount(); renderAll(true);
+}
+function becomeGuest() {
+  mode = 'guest'; account = null; syncError = false; cloud.reset();
+  [MODE_KEY, CLOUD_CACHE, 'roulette.cloudActive'].forEach(k => localStorage.removeItem(k));
+  state = load(); highlight = -1;
+  renderAll(true); renderAccount();
+}
+let refreshing = false;
+async function refreshFromServer(force) {
+  if (mode !== 'cloud' || !apiAvailable || refreshing || document.visibilityState === 'hidden') return;
+  if (!force && (spinning || cloud.pending || Object.keys(cloud.timers).length || document.querySelector('.layer'))) return;
+  refreshing = true;
+  try {
+    const d = await api('GET', '/api/state');
+    if (spinning || cloud.pending || Object.keys(cloud.timers).length) return;
+    const s = normState({ folders: d.folders, active: state.active });
+    syncError = false; setSync();
+    if (!s || JSON.stringify(s.folders) === JSON.stringify(state.folders)) return;
+    state = s; save();
+    if (document.activeElement !== ta) ta.value = cur().items.join('\n');
+    renderAll(false);
+  } catch (e) { if (e.status === 401) becomeGuest(); }
+  finally { refreshing = false; }
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') cloud.flush(true); else refreshFromServer(); });
+window.addEventListener('pagehide', () => cloud.flush(true));
+window.addEventListener('online', () => refreshFromServer(true));
+
+/* ---------- Google sign-in & account UI ---------- */
+const ICON_USER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';
+function avatarHTML(u, size) {
+  const initial = esc([...((u && (u.name || u.email)) || '?')][0].toUpperCase());
+  return '<span class="avatar" style="--s:' + size + 'px" aria-hidden="true"><span>' + initial + '</span>' +
+    (u && u.picture ? '<img src="' + esc(u.picture) + '" alt="" referrerpolicy="no-referrer">' : '') + '</span>';
+}
+const wireAvatars = root => root.querySelectorAll('.avatar img').forEach(i => i.addEventListener('error', () => i.remove()));
+function loadGIS() {
+  if (window.google && google.accounts && google.accounts.id) { initGIS(); return; }
+  const sc = document.createElement('script');
+  sc.src = 'https://accounts.google.com/gsi/client'; sc.async = true;
+  sc.onload = initGIS; sc.onerror = () => { gisFailed = true; renderAccount(); };
+  document.head.appendChild(sc);
+}
+function initGIS() {
+  try {
+    google.accounts.id.initialize({ client_id: clientId, callback: onCredential, ux_mode: 'popup', auto_select: false, cancel_on_tap_outside: true, itp_support: true, use_fedcm_for_button: true });
+    gisReady = true;
+  } catch (e) { gisFailed = true; }
+  renderAccount();
+}
+function renderGsiButton(el, width) {
+  if (!el) return;
+  if (gisFailed) { el.innerHTML = '<small>구글 로그인을 불러오지 못했어요</small>'; return; }
+  if (!gisReady) { el.innerHTML = '<small>불러오는 중…</small>'; return; }
+  el.innerHTML = '';
+  google.accounts.id.renderButton(el, { type: 'standard', theme: mqDark.matches ? 'filled_black' : 'outline', size: 'large', text: 'signin_with', shape: 'pill', logo_alignment: 'left', locale: 'ko', width: Math.max(200, Math.min(400, Math.round(width))) });
+}
+let acctModal = null;
+async function onCredential(resp) {
+  try {
+    const r = await api('POST', '/api/auth/google', { credential: resp && resp.credential });
+    if (acctModal) acctModal.close();
+    await enterCloud(r.user, true);
+    toast(((r.user && (r.user.name || r.user.email)) || '') + ' 님, 환영해요');
+  } catch (e) { toast(e.status === 401 ? '로그인 정보를 확인하지 못했어요' : '로그인에 실패했어요. 잠시 후 다시 시도해 주세요'); }
+}
+async function logout() {
+  cloud.flush();
+  try { await cloud.q; await api('POST', '/api/auth/logout', {}); } catch (e) {}
+  try { if (window.google && google.accounts) google.accounts.id.disableAutoSelect(); } catch (e) {}
+  becomeGuest(); toast('로그아웃했어요 · 지금부터는 이 브라우저에만 저장돼요');
+}
+function renderAccount() {
+  const side = $('#acctSide'), btn = $('#acctBtn');
+  $('#storageNote').textContent = mode === 'cloud' ? '계정에 저장돼요 · 모든 기기에서 동기화' : '데이터는 이 브라우저에만 저장돼요';
+  if (!apiAvailable && mode !== 'cloud') { side.hidden = true; btn.hidden = true; return; }
+  side.hidden = false; btn.hidden = false;
+  if (mode === 'cloud' && account) {
+    side.innerHTML = '<button class="acct-card" id="acctOpen" aria-haspopup="dialog">' + avatarHTML(account, 32) +
+      '<span class="acct-meta"><b>' + esc(account.name || '사용자') + '</b><small>' + esc(account.email || '') + '</small></span><span class="sync" aria-hidden="true"></span></button>';
+    $('#acctOpen').onclick = accountSheet;
+    btn.innerHTML = avatarHTML(account, 34); btn.setAttribute('aria-label', '계정: ' + (account.name || account.email || ''));
+    wireAvatars(side); wireAvatars(btn);
+  } else if (loginEnabled) {
+    side.innerHTML = '<div class="acct-guest"><b>로그인하고 동기화</b><small>폴더와 기록이 모든 기기에서 따라와요</small><div class="gsi-slot" id="gsiSide"></div></div>';
+    renderGsiButton($('#gsiSide'), 204);
+    btn.innerHTML = ICON_USER; btn.setAttribute('aria-label', '로그인');
+  } else {
+    side.innerHTML = '<div class="acct-guest"><b>구글 로그인 설정 전 <span class="pill">게스트</span></b><small>지금은 게스트 모드예요. 데이터는 이 브라우저에만 저장돼요.</small></div>';
+    btn.innerHTML = ICON_USER; btn.setAttribute('aria-label', '계정 (게스트 모드)');
+  }
+  setSync();
+}
+function accountSheet() {
+  let html = '<div class="grabber"></div>';
+  if (mode === 'cloud' && account) {
+    html += '<div class="profile">' + avatarHTML(account, 52) + '<div><b>' + esc(account.name || '사용자') + '</b><small>' + esc(account.email || '') + '</small></div></div>' +
+      '<div class="status-line"><span class="sync" aria-hidden="true"></span><span data-sync-label>동기화됨</span><span style="margin-left:auto">폴더 ' + state.folders.length + '개</span></div>' +
+      '<p class="m-desc" style="margin:12px 0 0;font-size:13px">폴더·항목·기록은 계정에 저장되어 로그인한 모든 기기에서 동기화돼요.</p>' +
+      '<div class="m-actions"><button class="btn" data-exp>내보내기 (JSON)</button><button class="btn" data-out>로그아웃</button></div>';
+  } else if (loginEnabled) {
+    html += '<h3 class="m-title">로그인</h3><p class="m-desc">구글 계정으로 로그인하면 폴더·기록·통계가 모든 기기에서 동기화돼요. 지금 이 브라우저의 데이터는 로그인 후 가져올 수 있어요.</p><div class="gsi-slot" id="gsiSheet"></div>';
+  } else {
+    html += '<h3 class="m-title">구글 로그인 설정 전</h3><p class="m-desc">아직 Google 로그인이 설정되지 않았어요. 지금은 게스트 모드로, 데이터가 이 브라우저에만 저장돼요. 기기를 옮길 땐 내보내기/가져오기를 써주세요.</p>' +
+      '<div class="m-actions"><button class="btn btn-primary" data-close>확인</button></div>';
+  }
+  const m = acctModal = openModal(html, { label: '계정', onClose: () => { acctModal = null; } });
+  wireAvatars(m.el); setSync();
+  const q = s => m.el.querySelector(s);
+  if (q('[data-exp]')) q('[data-exp]').onclick = () => { m.close(); exportData(); };
+  if (q('[data-out]')) q('[data-out]').onclick = () => { m.close(); logout(); };
+  if (q('[data-close]')) q('[data-close]').onclick = () => m.close();
+  if (q('#gsiSheet')) requestAnimationFrame(() => renderGsiButton(q('#gsiSheet'), Math.min(360, m.el.clientWidth - 48)));
+}
+$('#acctBtn').onclick = accountSheet;
+(mqDark.addEventListener ? mqDark.addEventListener('change', renderAccount) : mqDark.addListener(renderAccount));
+
+/* ---------- boot ---------- */
+async function boot() {
+  if (localStorage.getItem(MODE_KEY) === 'cloud') {
+    try {
+      const c = JSON.parse(localStorage.getItem(CLOUD_CACHE));
+      const s = c && normState(c.state);
+      if (s) { state = s; mode = 'cloud'; account = c.user || null; }
+    } catch (e) {}
+  }
+  renderAll(true); selectTab('items'); renderAccount();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
+  let cfg = null;
+  if (location.protocol !== 'file:') {
+    try { cfg = await Promise.race([api('GET', '/api/config'), new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 6000))]); } catch (e) {}
+  }
+  if (cfg && typeof cfg.login_enabled === 'boolean') {
+    apiAvailable = true; loginEnabled = cfg.login_enabled; clientId = cfg.google_client_id;
+    try {
+      const me = await api('GET', '/api/me');
+      if (me.user) await enterCloud(me.user, false);
+      else if (mode === 'cloud') { becomeGuest(); toast('로그인이 만료됐어요'); }
+    } catch (e) {
+      if (e.status === 401 && mode === 'cloud') { becomeGuest(); toast('로그인이 만료됐어요'); }
+      else if (mode === 'cloud') toast('서버에 연결할 수 없어요 · 마지막으로 저장된 사본이에요');
+    }
+    if (loginEnabled) loadGIS();
+  } else if (mode === 'cloud') {
+    toast('서버에 연결할 수 없어요 · 마지막으로 저장된 사본이에요');
+  }
+  renderAccount();
+  handleHash();
+}
+boot();
+window.__roulette = { indexAt, state: () => state, mode: () => mode };
 })();
 </script>
 </body>
