@@ -80,16 +80,17 @@ button{cursor:pointer;-webkit-user-select:none;user-select:none}
 .stage-title h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .stage-title p{margin:2px 0 0;font-size:13px;color:var(--text-2)}
 .stage-actions{display:flex;gap:2px}
-.wheel-box{position:relative;width:min(100%,400px);aspect-ratio:1/1;margin-top:10px}
+.wheel-box{position:relative;width:min(100%,400px);aspect-ratio:1/1;margin-top:10px;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.wheel-box::before{content:"";position:absolute;inset:-20px;border-radius:50%}
 .wheel-ring{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:var(--surface);border:1px solid var(--border);padding:7px;box-shadow:var(--shadow-md);transition:box-shadow .6s var(--ease)}
 .wheel-box.glow .wheel-ring{box-shadow:var(--shadow-md),0 0 0 6px color-mix(in srgb,var(--glow) 22%,transparent),0 0 60px -6px var(--glow)}
 .wheel-ring canvas{display:block;width:100%;height:100%;border-radius:50%;will-change:transform;transform:rotate(0rad)}
 .pointer{position:absolute;left:50%;top:-16px;width:30px;height:40px;margin-left:-15px;z-index:3;color:var(--text);transform-origin:50% 35%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
 .pointer svg{width:100%;height:100%;display:block}
-.hub{position:absolute;left:50%;top:50%;width:74px;height:74px;margin:-37px 0 0 -37px;z-index:2;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--accent-text);font-size:15px;font-weight:700;letter-spacing:-.02em;box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px -4px rgba(0,0,0,.25);transition:transform .15s var(--ease),color .15s,box-shadow .2s}
-.hub:hover{transform:scale(1.04)}
-.hub:active{transform:scale(.95)}
-.hub:disabled{color:var(--text-3);cursor:default;transform:none}
+.hub{position:absolute;left:50%;top:50%;width:26%;height:26%;min-width:84px;min-height:84px;max-width:124px;max-height:124px;transform:translate(-50%,-50%);z-index:2;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--accent-text);font-size:clamp(16px,4.6vw,20px);touch-action:manipulation;font-weight:700;letter-spacing:-.02em;box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px -4px rgba(0,0,0,.25);transition:transform .15s var(--ease),color .15s,box-shadow .2s}
+.hub:hover{transform:translate(-50%,-50%) scale(1.04)}
+.hub:active{transform:translate(-50%,-50%) scale(.95)}
+.hub:disabled{color:var(--text-3);cursor:default;transform:translate(-50%,-50%)}
 .hub::after{content:"";position:absolute;inset:5px;border-radius:50%;border:1px solid var(--border)}
 .stage-foot{width:min(100%,400px);margin-top:22px;display:flex;flex-direction:column;gap:10px}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 14px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface)}
@@ -211,6 +212,35 @@ textarea.items[readonly]{opacity:.6}
 .fitem.drop-after{box-shadow:inset 0 -2px 0 var(--accent)}
 .fitem.dragging{opacity:.4}
 
+/* login nudge */
+.nudge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);font-size:12.5px;font-weight:500;color:var(--text-2);transition:background .15s,color .15s,border-color .15s}
+.nudge:hover{background:var(--accent-soft);color:var(--accent-text);border-color:transparent}
+.g-ico{width:14px;height:14px;flex:none}
+.login-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 12px 8px;color:var(--text-2)}
+.login-card>svg{width:44px;height:44px;color:var(--text-3);margin-bottom:12px}
+.login-card strong{color:var(--text);font-size:15px;font-weight:600}
+.login-card p{margin:4px 0 16px;font-size:13px;max-width:280px}
+.login-card .gsi-slot{width:100%;max-width:300px}
+.session-list{width:100%;margin-top:22px;text-align:left}
+.session-list small{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:4px}
+.login-note{margin:18px 0 0!important;font-size:12px!important;color:var(--text-3)}
+
+/* pet (big screen) mode */
+.pet-btn{width:100%}
+.pet{position:fixed;inset:0;z-index:40;background:var(--bg);touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer}
+.pet[hidden]{display:none}
+body.pet-on{overflow:hidden}
+body.pet-on .wheel-box{position:fixed;z-index:41;left:50%;top:calc(env(safe-area-inset-top) + 24px + min(92vw, calc(100dvh - 230px)) / 2);transform:translate(-50%,-50%);width:min(92vw,calc(100dvh - 230px));margin:0;touch-action:none}
+body.pet-on .hub{pointer-events:none}
+.pet-close{display:none;position:fixed;top:calc(env(safe-area-inset-top) + 12px);right:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:16px;place-items:center;box-shadow:var(--shadow-sm);z-index:45;cursor:pointer}
+body.pet-on .pet-close{display:grid}
+.pet-result{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom) + 28px);text-align:center;pointer-events:none}
+.pet-result small{display:block;font-size:13px;font-weight:600;color:var(--text-2)}
+.pet-result b{display:block;margin-top:4px;font-size:clamp(30px,9vw,52px);font-weight:750;letter-spacing:-.035em;line-height:1.15;word-break:keep-all;overflow-wrap:anywhere}
+.pet-result em{display:block;margin-top:6px;font-style:normal;font-size:12px;color:var(--text-3)}
+.pet-result .pet-hint{font-size:15px;color:var(--text-2)}
+.pet-result.show b{animation:pop .5s var(--spring) both}
+
 /* ---------- modal / sheet ---------- */
 .layer{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .scrim{position:absolute;inset:0;background:rgba(12,10,9,.4);opacity:0;transition:opacity .22s}
@@ -323,6 +353,7 @@ textarea.items[readonly]{opacity:.6}
           <input type="checkbox" class="switch" id="exclude" role="switch">
         </div>
         <div class="last" id="last" aria-live="polite"></div>
+        <button class="btn btn-lg pet-btn" id="petBtn">🐾 큰 화면 모드 <small style="font-weight:400;color:var(--text-2)">· 아무 곳이나 터치</small></button>
       </div>
     </section>
 
@@ -343,6 +374,10 @@ textarea.items[readonly]{opacity:.6}
     </section>
   </main>
 </div>
+<div class="pet" id="pet" hidden role="dialog" aria-label="큰 화면 모드">
+  <div class="pet-result" id="petResult" aria-live="polite"></div>
+</div>
+<button class="pet-close" id="petClose" aria-label="큰 화면 모드 닫기">✕</button>
 <input type="file" id="importFile" accept="application/json,.json" hidden>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
@@ -414,10 +449,11 @@ const fullStamp = t => (yearOf(t) === yearOf(Date.now()) ? fDate : fDateY).forma
 /* ---------- state ---------- */
 function newFolder(name, items = []) { return { id: uid(), name, items, exclude: false, history: [], created: Date.now() }; }
 function defaultState() {
-  const a = newFolder('점심', ['김치찌개','된장찌개','제육볶음','돈까스','쌀국수','샐러드']);
-  const b = newFolder('산책', ['한강','동네 공원','뒷산','카페 거리']);
-  return { v: 2, active: a.id, folders: [a, b] };
+  const a = newFolder('내 룰렛', []);
+  return { v: 2, active: a.id, folders: [a] };
 }
+// pre-v4 sample data, treated as "untouched" when deciding whether to offer a guest import
+const LEGACY_SAMPLE_SIG = JSON.stringify([['점심', ['김치찌개','된장찌개','제육볶음','돈까스','쌀국수','샐러드']], ['산책', ['한강','동네 공원','뒷산','카페 거리']]]);
 function normFolder(f) {
   if (!f || typeof f !== 'object') return null;
   const items = (Array.isArray(f.items) ? f.items : parseItems(f.items || '')).map(x => String(x).trim().slice(0, 100)).filter(Boolean).slice(0, MAX_ITEMS);
@@ -438,7 +474,9 @@ function load() {
   return defaultState();
 }
 let state = load();
-let mode = 'guest';            // 'guest' (localStorage) | 'cloud' (server account)
+let mode = 'guest';
+const sessionSpins = [];       // guest spins this session (memory only), saved to the account on login
+const guestNoHistory = () => mode !== 'cloud' && loginEnabled;            // 'guest' (localStorage) | 'cloud' (server account)
 let account = null, apiAvailable = false, loginEnabled = false, clientId = null, gisReady = false, gisFailed = false, syncError = false;
 const MODE_KEY = 'roulette.mode', CLOUD_CACHE = 'roulette.cloudCache';
 function save() {
@@ -451,7 +489,7 @@ const cur = () => state.folders.find(f => f.id === state.active) || state.folder
 
 /* ---------- elements ---------- */
 const cv = $('#wheel'), box = $('#wheelBox'), hub = $('#hub'), pointer = $('#pointer'), ta = $('#items');
-let rot = 0, spinning = false, highlight = -1, activeTab = 'items';
+let rot = 0, spinning = false, highlight = -1, activeTab = 'items', lastEnd = 0, petOn = false;
 
 /* ---------- wheel ---------- */
 function setRot() { cv.style.transform = 'rotate(' + rot + 'rad)'; }
@@ -542,12 +580,17 @@ function spin() {
     if (landed !== win) console.warn('pointer mismatch', landed, win);
     const name = it[landed], t = Date.now();
     const entry = { t, w: name, n };
-    f.history.push(entry); if (f.history.length > MAX_HISTORY) f.history.splice(0, f.history.length - MAX_HISTORY);
-    save(); cloud.spin(f, entry);
+    if (guestNoHistory()) {
+      sessionSpins.push({ fid: f.id, name: f.name, items: it, w: name, n, t });
+      if (sessionSpins.length > 20) sessionSpins.shift();
+    } else {
+      f.history.push(entry); if (f.history.length > MAX_HISTORY) f.history.splice(0, f.history.length - MAX_HISTORY);
+      save(); cloud.spin(f, entry);
+    }
     highlight = landed; drawWheel();
     box.style.setProperty('--glow', colorFor(landed, n)); box.classList.add('glow');
     renderFolders(); renderStageMeta(); renderHistory(true); renderStats(); renderLast();
-    setTimeout(() => showWinner(f, name, landed, n, t), reduce ? 60 : 380);
+    setTimeout(() => (petOn ? petWinner : showWinner)(f, name, landed, n, t), petOn ? 0 : reduce ? 60 : 380);
   };
   requestAnimationFrame(frame);
 }
@@ -558,21 +601,27 @@ function endSpin(f, idx, name) {
     if (f.id === state.active) ta.value = f.items.join('\n');
     toast('‘' + name + '’ 항목을 뺐어요');
   }
-  spinning = false; document.body.classList.remove('spinning'); hub.disabled = false; ta.readOnly = false;
+  spinning = false; lastEnd = Date.now(); document.body.classList.remove('spinning'); hub.disabled = false; ta.readOnly = false;
   renderAll(false);
 }
 function showWinner(f, name, idx, n, t) {
   const col = colorFor(idx, n), cnt = f.history.filter(e => e.w === name).length, total = f.history.length;
-  let again = false;
+  const guest = guestNoHistory();
+  let again = false, wantLogin = false;
+  const meta = guest
+    ? esc(fullStamp(t)) + (f.exclude ? '<br>다음 판부터 이 항목은 빠져요' : '') +
+      '<br><button class="nudge" data-login>' + ICON_G + '로그인하면 이 결과가 기록돼요</button>'
+    : esc(fullStamp(t)) + '<br>지금까지 ' + cnt + '번 당첨 · 전체 ' + total + '회 중 ' + Math.round(cnt / total * 100) + '%' + (f.exclude ? '<br>다음 판부터 이 항목은 빠져요' : '');
   const m = openModal(
     '<div class="grabber"></div><div class="winner" style="--glow:' + col + '">' +
     '<div class="eyebrow">' + esc(f.name) + ' · 당첨</div>' +
     '<div class="orb" aria-hidden="true">🎉</div>' +
     '<div class="wname">' + esc(name) + '</div>' +
-    '<div class="wmeta">' + esc(fullStamp(t)) + '<br>지금까지 ' + cnt + '번 당첨 · 전체 ' + total + '회 중 ' + Math.round(cnt / total * 100) + '%' + (f.exclude ? '<br>다음 판부터 이 항목은 빠져요' : '') + '</div>' +
+    '<div class="wmeta">' + meta + '</div>' +
     '<div class="m-actions"><button class="btn" data-ok>확인</button><button class="btn btn-primary" data-again>다시 돌리기</button></div></div>',
-    { label: name + ' 당첨', onClose: () => { endSpin(f, idx, name); if (again) setTimeout(spin, 120); } });
+    { label: name + ' 당첨', onClose: () => { endSpin(f, idx, name); if (again) setTimeout(spin, 120); if (wantLogin) setTimeout(accountSheet, 280); } });
   m.el.querySelector('[data-ok]').onclick = () => m.close();
+  if (guest) m.el.querySelector('[data-login]').onclick = () => { wantLogin = true; m.close(); };
   m.el.querySelector('[data-again]').onclick = () => { again = true; m.close(); };
   setTimeout(() => m.el.querySelector('[data-again]').focus({ preventScroll: true }), 30);
   confetti();
@@ -714,7 +763,7 @@ function folderItemsHTML() {
   const p = PALETTE.light;
   return state.folders.map((f, i) => '<li><button class="fitem" draggable="true" data-id="' + f.id + '"' + (f.id === state.active ? ' aria-current="true"' : '') + '>' +
     '<span class="fsq" style="background:' + p[i % p.length] + ';color:' + labelColor(p[i % p.length]) + '">' + esc([...f.name][0] || '?') + '</span>' +
-    '<span class="fname">' + esc(f.name) + '</span><span class="fmeta tnum">' + f.items.length + '개 · ' + f.history.length + '회</span></button></li>').join('');
+    '<span class="fname">' + esc(f.name) + '</span><span class="fmeta tnum">' + f.items.length + '개' + (guestNoHistory() ? '' : ' · ' + f.history.length + '회') + '</span></button></li>').join('');
 }
 
 /* ---------- items ---------- */
@@ -757,16 +806,34 @@ function renderStageMeta() {
   $('#hint').hidden = n >= 2;
   $('#exclude').checked = f.exclude;
   $('#histBadge').textContent = f.history.length > 999 ? '999+' : f.history.length;
+  $('#histBadge').style.display = guestNoHistory() ? 'none' : '';
+  $('#folderMeta').textContent = '항목 ' + n + '개' + (guestNoHistory() ? ' · 게스트' : ' · 기록 ' + f.history.length + '회');
+  $('#hint').textContent = n === 0 ? '항목을 입력해 보세요 · 2개 이상이면 돌릴 수 있어요' : '항목을 하나 더 추가하면 돌릴 수 있어요';
   cv.setAttribute('aria-label', '룰렛 휠: ' + (n ? f.items.join(', ') : '항목 없음'));
 }
 function renderLast() {
-  const f = cur(), h = f.history[f.history.length - 1];
+  const f = cur(), sess = sessionSpins.filter(s => s.fid === f.id);
+  const h = guestNoHistory() ? sess[sess.length - 1] : f.history[f.history.length - 1];
   $('#last').innerHTML = h ? '최근 당첨 <b>' + esc(h.w) + '</b> · ' + esc(ago(h.t)) + ' ' + esc(fTime.format(h.t)) : '';
 }
 const ICON_HIST = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M24 14v10l7 4"/></svg>';
 const ICON_STATS = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 38h28M15 32V22M24 32V12M33 32v-6"/></svg>';
+const ICON_G = '<svg class="g-ico" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
+function loginCardHTML(kind) {
+  const f = cur(), old = f.history.length, sess = sessionSpins.filter(s => s.fid === f.id);
+  const icon = kind === 'stats' ? ICON_STATS : ICON_HIST;
+  let extra = '';
+  if (sess.length) extra += '<div class="session-list"><small>이번 방문에서 돌린 결과 · 로그인하면 함께 저장돼요</small>' +
+    sess.slice(-5).reverse().map(s => '<div class="hrow"><span class="dot" style="background:' + colorOfName(f, s.w) + '"></span><span class="hname">' + esc(s.w) + '</span><span class="hmeta tnum">' + esc(fTime.format(s.t)) + '</span></div>').join('') + '</div>';
+  if (old) extra += '<p class="login-note">이 브라우저에 이전 기록 ' + old + '건이 있어요 · 로그인하면 계정으로 가져올 수 있어요</p>';
+  return '<div class="login-card">' + icon + '<strong>당첨 기록과 통계는 로그인하면 저장돼요</strong>' +
+    '<p>' + (kind === 'stats' ? '항목별 당첨 횟수와 비율, 최다·최소 당첨을 한눈에 볼 수 있어요.' : '언제 무엇이 당첨됐는지 모든 기기에서 이어서 볼 수 있어요.') + '</p>' +
+    '<div class="gsi-slot gsi-card-slot"></div>' + extra + '</div>';
+}
+function mountCardButtons(root) { (root || document).querySelectorAll('.gsi-card-slot').forEach(el => renderGsiButton(el, Math.min(300, (el.clientWidth || 300)))); }
 function renderHistory(fresh) {
   const f = cur(), el = $('#p-history'), h = f.history;
+  if (guestNoHistory()) { el.innerHTML = loginCardHTML('history'); mountCardButtons(el); return; }
   if (!h.length) {
     el.innerHTML = '<div class="empty">' + ICON_HIST + '<strong>아직 기록이 없어요</strong><p>룰렛을 돌리면 언제 무엇이 당첨됐는지 여기에 쌓여요</p></div>';
     return;
@@ -811,7 +878,9 @@ function computeStats(f) {
 }
 function namesOf(list) { const n = list.map(r => r.name); return n.length > 2 ? n.slice(0, 2).join(', ') + ' 외 ' + (n.length - 2) : n.join(', '); }
 function renderStats() {
-  const f = cur(), el = $('#p-stats'), S = computeStats(f);
+  const f = cur(), el = $('#p-stats');
+  if (guestNoHistory()) { el.innerHTML = loginCardHTML('stats'); mountCardButtons(el); return; }
+  const S = computeStats(f);
   if (!S.total) {
     el.innerHTML = '<div class="empty">' + ICON_STATS + '<strong>통계를 만들 기록이 부족해요</strong><p>몇 번 돌려보면 항목별 당첨 횟수와 비율이 여기에 나타나요</p>' +
       (f.items.length >= 2 ? '<button class="btn btn-primary" id="statsSpin">지금 돌리기</button>' : '') + '</div>';
@@ -861,6 +930,7 @@ function selectTab(name) {
     if (on) $('#tabInd').style.transform = 'translateX(' + (i * 100) + '%)';
   });
   if (name === 'stats') renderStats();
+  if (name === 'history') renderHistory(false);
 }
 TABS.forEach((t, i) => {
   const b = $('#tab-' + t);
@@ -945,7 +1015,48 @@ async function handleHash() {
 }
 
 /* ---------- wiring ---------- */
-hub.onclick = spin;
+/* touch anywhere on the wheel (pointerdown: a nose bump counts) */
+function tapSpin(e) {
+  if (e && e.button > 0) return;
+  if (e && e.cancelable) e.preventDefault();
+  if (spinning || Date.now() - lastEnd < 1000) return;
+  if (!petOn && document.querySelector('.layer')) return;
+  spin();
+}
+box.addEventListener('pointerdown', tapSpin);
+box.addEventListener('contextmenu', e => e.preventDefault());
+hub.onclick = e => { if (e.detail === 0) spin(); }; // keyboard activation
+/* big screen (pet) mode */
+function petIdle() { $('#petResult').innerHTML = '<span class="pet-hint">화면 아무 곳이나 터치하면 돌아가요 🐾</span>'; }
+function petWinner(f, name, idx, n, t) {
+  const r = $('#petResult');
+  r.innerHTML = '<small>' + esc(f.name) + ' · 당첨</small><b>' + esc(name) + '</b>' + (guestNoHistory() ? '<em>로그인하면 결과가 기록돼요</em>' : '');
+  r.classList.remove('show'); void r.offsetWidth; r.classList.add('show');
+  confetti();
+  setTimeout(() => endSpin(f, idx, name), 900);
+}
+function enterPet() {
+  commitItems();
+  if (cur().items.length < 2) { toast('항목을 2개 이상 넣으면 큰 화면 모드를 쓸 수 있어요'); return; }
+  petOn = true; document.body.classList.add('pet-on'); $('#pet').hidden = false; petIdle();
+  const el = document.documentElement, rf = el.requestFullscreen || el.webkitRequestFullscreen;
+  if (rf) { try { const p = rf.call(el); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
+  requestAnimationFrame(drawWheel);
+}
+function exitPet() {
+  if (!petOn) return;
+  petOn = false; document.body.classList.remove('pet-on'); $('#pet').hidden = true;
+  const fe = document.fullscreenElement || document.webkitFullscreenElement;
+  if (fe) { const ex = document.exitFullscreen || document.webkitExitFullscreen; try { const p = ex.call(document); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
+  requestAnimationFrame(drawWheel);
+}
+$('#petBtn').onclick = enterPet;
+$('#pet').addEventListener('pointerdown', e => { if (e.target.closest('#petClose')) return; tapSpin(e); });
+$('#pet').addEventListener('contextmenu', e => e.preventDefault());
+$('#petClose').addEventListener('pointerdown', e => e.stopPropagation());
+$('#petClose').onclick = exitPet;
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { if (!(document.fullscreenElement || document.webkitFullscreenElement)) exitPet(); }));
+document.addEventListener('keydown', e => { if (petOn && e.key === 'Escape') exitPet(); });
 $('#newFolderSide').onclick = createFolder;
 $('#folderChip').onclick = folderSheet;
 $('#renameBtn').onclick = renameFolder;
@@ -1055,6 +1166,7 @@ async function ensureFolders() {
   state = d; save();
 }
 const DEFAULT_SIG = JSON.stringify(defaultState().folders.map(f => [f.name, f.items]));
+const isUntouched = folders => { const sig = JSON.stringify(folders.map(f => [f.name, f.items])); return sig === DEFAULT_SIG || sig === LEGACY_SAMPLE_SIG; };
 async function offerGuestImport() {
   const key = 'roulette.guestOffered.' + ((account && account.email) || '');
   if (localStorage.getItem(key)) return;
@@ -1062,7 +1174,7 @@ async function offerGuestImport() {
   let g = null; try { g = normState(JSON.parse(localStorage.getItem(LS_KEY))); } catch (e) {}
   if (!g) return;
   const hc = g.folders.reduce((s, f) => s + f.history.length, 0);
-  if (!hc && JSON.stringify(g.folders.map(f => [f.name, f.items])) === DEFAULT_SIG) return; // untouched sample data
+  if (!hc && isUntouched(g.folders)) return; // untouched default/sample data
   const ok = await choice('이 브라우저의 데이터를 가져올까요?', '로그인 전에 쓰던 폴더 ' + g.folders.length + '개 · 기록 ' + hc + '건이 있어요. 계정으로 가져오면 모든 기기에서 볼 수 있어요.',
     [{ label: '건너뛰기', value: false }, { label: '가져오기', value: true, cls: 'btn-primary' }]);
   if (ok !== true) return;
@@ -1072,6 +1184,25 @@ async function offerGuestImport() {
     toast('폴더 ' + (r.added + r.merged) + '개를 가져왔어요' + (r.skipped ? ' (' + r.skipped + '개는 한도 초과)' : ''));
   } catch (e) { toast('가져오기에 실패했어요'); }
 }
+async function saveSessionSpins() {
+  if (!sessionSpins.length) return;
+  const list = sessionSpins.splice(0);
+  let saved = 0;
+  try {
+    for (const s of list) {
+      let f = state.folders.find(x => x.id === s.fid);
+      if (!f) {
+        f = newFolder(s.name, s.items.slice()); f.id = s.fid;
+        await api('POST', '/api/folders', { id: f.id, name: f.name, items: f.items, exclude: false });
+        state.folders.push(f);
+      }
+      const r = await api('POST', '/api/folders/' + f.id + '/spins', { item: s.w, n: s.n });
+      f.history.push(r.spin); saved++;
+    }
+  } catch (e) {}
+  save();
+  if (saved) setTimeout(() => toast('방금 돌린 결과 ' + saved + '개를 기록했어요'), 1600);
+}
 async function enterCloud(user, fresh) {
   account = user; mode = 'cloud'; syncError = false;
   localStorage.setItem(MODE_KEY, 'cloud');
@@ -1079,6 +1210,7 @@ async function enterCloud(user, fresh) {
   applyServerFolders(d.folders);
   if (fresh) await offerGuestImport();
   await ensureFolders();
+  if (fresh) await saveSessionSpins();
   renderAccount(); renderAll(true);
 }
 function becomeGuest() {
@@ -1172,6 +1304,7 @@ function renderAccount() {
     btn.innerHTML = ICON_USER; btn.setAttribute('aria-label', '계정 (게스트 모드)');
   }
   setSync();
+  renderHistory(false); renderStats(); renderStageMeta(); renderLast(); renderFolders();
 }
 function accountSheet() {
   let html = '<div class="grabber"></div>';
